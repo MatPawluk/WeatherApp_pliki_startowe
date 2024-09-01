@@ -6,9 +6,6 @@ const photo = document.querySelector(".photo");
 const weather = document.querySelector(".weather");
 const temperature = document.querySelector(".temperature");
 const humidity = document.querySelector(".humidity");
-let city;
-let lat;
-let lon;
 
 const API_WEATHER_LINK = "https://api.openweathermap.org/data/2.5/weather?";
 const API_GEO_CITY_LINK = "http://api.openweathermap.org/geo/1.0/direct?q=";
@@ -16,24 +13,19 @@ const API_KEY = "&appid=833672aba96dbdcd1ad7bb1844fcaf7d";
 const API_WEATHER_UNITS = "&units=metric";
 
 const getWheather = () => {
-  city = input.value;
+  let city = input.value;
   const GET_CITY_URL = API_GEO_CITY_LINK + city + API_KEY;
 
   axios
     .get(GET_CITY_URL)
     .then((res) => {
-      console.log(res);
-      lat = res.data[0].lat.toString();
-      lon = res.data[0].lon.toString();
-      console.log(lat);
-      console.log(lon);
+      let lat = res.data[0].lat.toString();
+      let lon = res.data[0].lon.toString();
 
       const GET_WEATHER_URL = `${API_WEATHER_LINK}lat=${lat}&lon=${lon}${API_KEY}${API_WEATHER_UNITS}`;
       console.log(GET_WEATHER_URL);
 
       axios.get(GET_WEATHER_URL).then((weatherRes) => {
-        console.log(weatherRes);
-
         const status = Object.assign({}, ...weatherRes.data.weather);
 
         temperature.textContent = `${Math.floor(weatherRes.data.main.temp)}°C`;
@@ -63,8 +55,8 @@ const getWheather = () => {
     })
     .catch(() => (warning.textContent = "Wpisz poprawną nazwę miasta!"));
 };
-input.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
     getWheather();
   }
 });
