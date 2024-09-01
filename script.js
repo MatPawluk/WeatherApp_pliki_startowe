@@ -53,7 +53,7 @@ const getWheather = () => {
         input.value = "";
       });
     })
-    .catch(() => (warning.textContent = "Wpisz poprawną nazwę miasta!"));
+    .catch(() => (warning.textContent = "Please enter the correct city name!"));
 };
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
